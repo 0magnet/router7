@@ -28,7 +28,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/gokrazy/gokrazy"
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/libdns"
 	"github.com/rtr7/router7/internal/dyndns"
@@ -132,9 +131,10 @@ func main() {
 	}
 	b, err := ioutil.ReadFile(*configFile)
 	if err != nil {
-		if os.IsNotExist(err) {
-			gokrazy.DontStartOnBoot()
-		}
+		// host-OS port: gokrazy.DontStartOnBoot() dropped — on a normal OS the
+		// service manager's restart policy (e.g. systemd Restart=on-failure with a
+		// backoff, or no restart) governs behaviour when the config is absent;
+		// there is no gokrazy supervisor to signal.
 		log.Fatal(err)
 	}
 	if err := json.Unmarshal(b, &config); err != nil {

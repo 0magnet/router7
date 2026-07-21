@@ -25,7 +25,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/gokrazy/gokrazy"
+	"github.com/gokrazy/gokrazy/ifaddr"
 	miekgdns "github.com/miekg/dns"
 
 	"github.com/rtr7/router7/internal/dhcp4d"
@@ -43,7 +43,7 @@ var (
 )
 
 func updateListeners(mux *miekgdns.ServeMux) error {
-	privateAddrs, err := gokrazy.PrivateInterfaceAddrs()
+	privateAddrs, err := ifaddr.PrivateInterfaceAddrs()
 	if err != nil {
 		return err
 	}

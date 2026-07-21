@@ -36,7 +36,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/gokrazy/gokrazy"
+	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/google/renameio"
 	"github.com/krolaw/dhcp4"
 	"github.com/krolaw/dhcp4/conn"
@@ -222,7 +222,7 @@ func loadLeases(h *dhcp4d.Handler, fn string) error {
 var httpListeners = multilisten.NewPool()
 
 func updateListeners() error {
-	hosts, err := gokrazy.PrivateInterfaceAddrs()
+	hosts, err := ifaddr.PrivateInterfaceAddrs()
 	if err != nil {
 		return err
 	}
@@ -337,7 +337,7 @@ func newSrv(permDir string) (*srv, error) {
 		if xff := r.Header.Get("X-Forwarded-For"); ip.IsLoopback() && xff != "" {
 			ip = net.ParseIP(xff)
 		}
-		if !gokrazy.IsInPrivateNet(ip) {
+		if !ifaddr.IsInPrivateNet(ip) {
 			http.Error(w, fmt.Sprintf("access from %v forbidden", ip), http.StatusForbidden)
 			return
 		}

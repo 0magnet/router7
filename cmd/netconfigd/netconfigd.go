@@ -24,7 +24,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/gokrazy/gokrazy"
+	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/google/nftables"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
@@ -127,7 +127,7 @@ func init() {
 var httpListeners = multilisten.NewPool()
 
 func updateListeners() error {
-	hosts, err := gokrazy.PrivateInterfaceAddrs()
+	hosts, err := ifaddr.PrivateInterfaceAddrs()
 	if err != nil {
 		return err
 	}

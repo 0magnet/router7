@@ -29,7 +29,7 @@ import (
 
 	"github.com/rtr7/router7/internal/multilisten"
 
-	"github.com/gokrazy/gokrazy"
+	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcapgo"
@@ -106,7 +106,7 @@ func (prb *packetRingBuffer) packetsLocked() []gopacket.Packet {
 var sshListeners = multilisten.NewPool()
 
 func updateListeners(srv *server) error {
-	hosts, err := gokrazy.PrivateInterfaceAddrs()
+	hosts, err := ifaddr.PrivateInterfaceAddrs()
 	if err != nil {
 		return err
 	}

@@ -23,7 +23,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/gokrazy/gokrazy"
+	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/gokrazy/rsync/rsyncd"
 
 	"github.com/rtr7/router7/internal/backup"
@@ -81,7 +81,7 @@ func (r *rsyncListener) Close() error {
 }
 
 func updateListeners() error {
-	hosts, err := gokrazy.PrivateInterfaceAddrs()
+	hosts, err := ifaddr.PrivateInterfaceAddrs()
 	if err != nil {
 		return err
 	}
