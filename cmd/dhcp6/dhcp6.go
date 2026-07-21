@@ -36,18 +36,18 @@ import (
 var log = teelogger.NewConsole()
 
 func logic() error {
-	const leasePath = "/perm/dhcp6/wire/lease.json"
+	leasePath := filepath.Join(*permDir, "dhcp6", "wire", "lease.json")
 	if err := os.MkdirAll(filepath.Dir(leasePath), 0755); err != nil {
 		return err
 	}
 
-	duid, err := ioutil.ReadFile("/perm/dhcp6/duid")
+	duid, err := ioutil.ReadFile(filepath.Join(*permDir, "dhcp6", "duid"))
 	if err != nil {
 		log.Printf("could not read /perm/dhcp6/duid (%v), proceeding with DUID-LLT", err)
 	}
 
 	c, err := dhcp6.NewClient(dhcp6.ClientConfig{
-		InterfaceName: "uplink0",
+		InterfaceName: *wanIface,
 		DUID:          duid,
 	})
 	if err != nil {
@@ -97,6 +97,11 @@ func logic() error {
 	}
 	return c.Err() // permanent error
 }
+
+var (
+	permDir  = flag.String("perm", "/perm", "state directory holding the dhcp6 lease + DUID")
+	wanIface = flag.String("interface", "uplink0", "WAN/uplink interface for DHCPv6")
+)
 
 func main() {
 	flag.Parse()

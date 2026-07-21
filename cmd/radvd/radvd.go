@@ -23,6 +23,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 
 	"github.com/rtr7/router7/internal/dhcp6"
@@ -35,7 +36,7 @@ func logic() error {
 		return err
 	}
 	readConfig := func() error {
-		b, err := ioutil.ReadFile("/perm/dhcp6/wire/lease.json")
+		b, err := ioutil.ReadFile(filepath.Join(*permDir, "dhcp6", "wire", "lease.json"))
 		if err != nil {
 			return err
 		}
@@ -45,7 +46,7 @@ func logic() error {
 		}
 
 		var additional []net.IPNet
-		if b, err := ioutil.ReadFile("/perm/radvd/prefixes.json"); err == nil {
+		if b, err := ioutil.ReadFile(filepath.Join(*permDir, "radvd", "prefixes.json")); err == nil {
 			if err := json.Unmarshal(b, &additional); err != nil {
 				return err
 			}
@@ -66,8 +67,13 @@ func logic() error {
 			}
 		}
 	}()
-	return srv.ListenAndServe("lan0")
+	return srv.ListenAndServe(*lanIface)
 }
+
+var (
+	permDir  = flag.String("perm", "/perm", "state directory holding dhcp6 lease + radvd prefixes")
+	lanIface = flag.String("lan", "lan0", "LAN interface to send router advertisements on")
+)
 
 func main() {
 	// TODO: drop privileges, run as separate uid?

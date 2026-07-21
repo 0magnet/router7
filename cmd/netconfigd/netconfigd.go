@@ -131,7 +131,7 @@ func updateListeners() error {
 	if err != nil {
 		return err
 	}
-	if net1, err := multilisten.IPv6Net1("/perm"); err == nil {
+	if net1, err := multilisten.IPv6Net1(*permDir); err == nil {
 		hosts = append(hosts, net1)
 	}
 
@@ -151,7 +151,7 @@ func logic() error {
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGUSR1)
 	for {
-		err := netconfig.Apply("/perm/", "/")
+		err := netconfig.Apply(*permDir+"/", "/")
 
 		// Notify dhcp4d so that it can update its listeners for prometheus
 		// metrics on the external interface.
@@ -179,6 +179,8 @@ func logic() error {
 	}
 	return nil
 }
+
+var permDir = flag.String("perm", "/perm", "state directory holding interfaces.json + generated config")
 
 func main() {
 	flag.Parse()
