@@ -52,6 +52,7 @@ import (
 )
 
 var iface = flag.String("interface", "lan0", "ethernet interface to listen for DHCPv4 requests on")
+var permDir = flag.String("perm", "/perm", "state directory holding DHCP leases + the OUI database")
 
 var log = teelogger.NewConsole()
 
@@ -72,7 +73,7 @@ func updateNonExpired(leases []*dhcp4d.Lease) {
 	nonExpiredLeases.Set(float64(nonExpired))
 }
 
-var ouiDB = oui.NewDB("/perm/dhcp4d/oui")
+var ouiDB *oui.DB
 
 var (
 	leasesMu sync.Mutex
@@ -226,7 +227,7 @@ func updateListeners() error {
 	if err != nil {
 		return err
 	}
-	if net1, err := multilisten.IPv6Net1("/perm"); err == nil {
+	if net1, err := multilisten.IPv6Net1(*permDir); err == nil {
 		hosts = append(hosts, net1)
 	}
 
@@ -479,7 +480,8 @@ func (s *srv) run(ctx context.Context) error {
 func main() {
 	// TODO: drop privileges, run as separate uid?
 	flag.Parse()
-	srv, err := newSrv("/perm")
+	ouiDB = oui.NewDB(filepath.Join(*permDir, "dhcp4d", "oui"))
+	srv, err := newSrv(*permDir)
 	if err != nil {
 		log.Fatal(err)
 	}

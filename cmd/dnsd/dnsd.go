@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 
 	"github.com/gokrazy/gokrazy/ifaddr"
@@ -37,6 +38,9 @@ import (
 )
 
 var (
+	permDir  = flag.String("perm", "/perm", "state directory holding DHCP leases + DNS aliases")
+	lanIface = flag.String("lan", "lan0", "LAN interface whose address DNS is served on")
+
 	httpListeners   = multilisten.NewPool()
 	dnsUDPListeners = multilisten.NewPool()
 	dnsTCPListeners = multilisten.NewPool()
@@ -64,7 +68,7 @@ func updateListeners(mux *miekgdns.ServeMux) error {
 		}}
 	})
 
-	if net1, err := multilisten.IPv6Net1("/perm"); err == nil {
+	if net1, err := multilisten.IPv6Net1(*permDir); err == nil {
 		privateAddrs = append(privateAddrs, net1)
 	}
 
@@ -83,13 +87,13 @@ func (a *listenerAdapter) Close() error { return a.Shutdown() }
 
 func logic() error {
 	// TODO: set correct upstream DNS resolver(s)
-	ip, err := netconfig.LinkAddress("/perm", "lan0")
+	ip, err := netconfig.LinkAddress(*permDir, *lanIface)
 	if err != nil {
 		return err
 	}
 	srv := dns.NewServer(ip.String()+":53", "lan")
 	readLeases := func() error {
-		b, err := os.ReadFile("/perm/dhcp4d/leases.json")
+		b, err := os.ReadFile(filepath.Join(*permDir, "dhcp4d", "leases.json"))
 		if err != nil {
 			return err
 		}
@@ -104,7 +108,7 @@ func logic() error {
 		log.Printf("cannot resolve DHCP hostnames: %v", err)
 	}
 	readAliases := func() error {
-		b, err := os.ReadFile("/perm/dnsd/aliases.json")
+		b, err := os.ReadFile(filepath.Join(*permDir, "dnsd", "aliases.json"))
 		if err != nil {
 			if os.IsNotExist(err) {
 				srv.SetAliases(nil)
