@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/go-cmp/cmp"
 	"github.com/rtr7/router7/internal/testing/pcapreplayer"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestDHCP4(t *testing.T) {

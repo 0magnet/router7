@@ -27,7 +27,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/rtr7/router7/internal/multilisten"
+	"github.com/rtr7/router7/pkg/multilisten"
 
 	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/google/gopacket"

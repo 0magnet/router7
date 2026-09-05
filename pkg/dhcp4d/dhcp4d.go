@@ -1,3 +1,5 @@
+//go:build linux
+
 // Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,8 +29,6 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
-	"github.com/rtr7/router7/internal/netconfig"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -74,16 +74,54 @@ type Handler struct {
 	leasesIP map[int]*Lease
 }
 
-func NewHandler(dir string, iface *net.Interface, ifaceName string, conn net.PacketConn) (*Handler, error) {
-	serverIP, err := netconfig.LinkAddress(dir, ifaceName)
+// ServerIPFunc resolves the address the DHCP server announces as its own: the
+// LAN gateway address handed to clients as router and DNS server.
+//
+// It exists so this package does not have to depend on the appliance's
+// netconfig package, whose netlink/nftables/wireguard tree is irrelevant to
+// serving DHCP. The router7 daemons pass a netconfig-backed resolver, which
+// preserves the appliance's exact behavior; an embedder that has no
+// interfaces.json gets InterfaceServerIP by default.
+type ServerIPFunc func(dir string, iface *net.Interface, ifaceName string) (net.IP, error)
+
+// InterfaceServerIP is the default ServerIPFunc: it reports the first IPv4
+// address the kernel has assigned to iface. This is the right answer whenever
+// the LAN interface is already configured by something other than router7's
+// own netconfigd — a normal host OS, for instance.
+func InterfaceServerIP(_ string, iface *net.Interface, _ string) (net.IP, error) {
+	addrs, err := iface.Addrs()
 	if err != nil {
 		return nil, err
 	}
+	for _, a := range addrs {
+		if ipn, ok := a.(*net.IPNet); ok {
+			if v4 := ipn.IP.To4(); v4 != nil {
+				return v4, nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("interface %s has no IPv4 address", iface.Name)
+}
+
+// NewHandler returns a DHCPv4 handler serving ifaceName.
+//
+// serverIP optionally overrides how the server's own address is discovered;
+// when omitted (or nil) InterfaceServerIP is used.
+func NewHandler(dir string, iface *net.Interface, ifaceName string, conn net.PacketConn, serverIPFn ...ServerIPFunc) (*Handler, error) {
+	var err error
 	if iface == nil {
 		iface, err = net.InterfaceByName(ifaceName)
 		if err != nil {
 			return nil, err
 		}
+	}
+	resolve := ServerIPFunc(InterfaceServerIP)
+	if len(serverIPFn) > 0 && serverIPFn[0] != nil {
+		resolve = serverIPFn[0]
+	}
+	serverIP, err := resolve(dir, iface, ifaceName)
+	if err != nil {
+		return nil, err
 	}
 	if conn == nil {
 		conn, err = packet.Listen(iface, packet.Raw, syscall.ETH_P_ALL, nil)
