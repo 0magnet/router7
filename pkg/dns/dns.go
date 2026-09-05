@@ -1,3 +1,5 @@
+//go:build linux
+
 // Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,8 +29,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rtr7/router7/internal/dhcp4d"
-	"github.com/rtr7/router7/internal/teelogger"
+	"github.com/0magnet/router7/pkg/dhcp4d"
+	"github.com/0magnet/router7/pkg/teelogger"
 
 	"github.com/miekg/dns"
 	"github.com/prometheus/client_golang/prometheus"

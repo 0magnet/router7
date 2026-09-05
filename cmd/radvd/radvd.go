@@ -26,8 +26,8 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/rtr7/router7/internal/dhcp6"
-	"github.com/rtr7/router7/internal/radvd"
+	"github.com/0magnet/router7/internal/radvd"
+	"github.com/0magnet/router7/pkg/dhcp6"
 )
 
 func logic() error {

@@ -22,7 +22,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/rtr7/router7/internal/backup"
+	"github.com/0magnet/router7/internal/backup"
 )
 
 func TestArchive(t *testing.T) {

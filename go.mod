@@ -1,4 +1,4 @@
-module github.com/rtr7/router7
+module github.com/0magnet/router7
 
 go 1.26
 

@@ -26,9 +26,9 @@ import (
 	"github.com/gokrazy/gokrazy/ifaddr"
 	"github.com/gokrazy/rsync/rsyncd"
 
-	"github.com/rtr7/router7/internal/backup"
-	"github.com/rtr7/router7/internal/multilisten"
-	"github.com/rtr7/router7/internal/teelogger"
+	"github.com/0magnet/router7/internal/backup"
+	"github.com/0magnet/router7/pkg/multilisten"
+	"github.com/0magnet/router7/pkg/teelogger"
 )
 
 var log = teelogger.NewConsole()

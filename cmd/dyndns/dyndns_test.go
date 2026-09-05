@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/0magnet/router7/internal/dyndns"
 	"github.com/libdns/libdns"
-	"github.com/rtr7/router7/internal/dyndns"
 )
 
 func TestLogic(t *testing.T) {

@@ -17,7 +17,7 @@ package diag_test
 import (
 	"testing"
 
-	"github.com/rtr7/router7/internal/diag"
+	"github.com/0magnet/router7/internal/diag"
 
 	"github.com/google/go-cmp/cmp"
 )

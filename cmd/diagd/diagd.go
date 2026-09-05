@@ -35,8 +35,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/rtr7/router7/internal/diag"
-	"github.com/rtr7/router7/internal/multilisten"
+	"github.com/0magnet/router7/internal/diag"
+	"github.com/0magnet/router7/pkg/multilisten"
 
 	_ "net/http/pprof"
 )

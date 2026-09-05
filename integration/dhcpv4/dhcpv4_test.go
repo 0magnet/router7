@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rtr7/router7/internal/dhcp4"
-	"github.com/rtr7/router7/internal/testing/dnsmasq"
+	"github.com/0magnet/router7/internal/dhcp4"
+	"github.com/0magnet/router7/internal/testing/dnsmasq"
 
 	"github.com/andreyvit/diff"
 	"github.com/google/go-cmp/cmp"

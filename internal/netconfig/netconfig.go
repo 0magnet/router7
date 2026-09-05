@@ -34,10 +34,10 @@ import (
 	"github.com/vishvananda/netlink"
 	"golang.org/x/sys/unix"
 
-	"github.com/rtr7/router7/internal/dhcp4"
-	"github.com/rtr7/router7/internal/dhcp6"
-	"github.com/rtr7/router7/internal/notify"
-	"github.com/rtr7/router7/internal/teelogger"
+	"github.com/0magnet/router7/internal/dhcp4"
+	"github.com/0magnet/router7/internal/notify"
+	"github.com/0magnet/router7/pkg/dhcp6"
+	"github.com/0magnet/router7/pkg/teelogger"
 )
 
 var log = teelogger.NewConsole()
@@ -1293,4 +1293,12 @@ func Apply(dir, root string) error {
 		return fmt.Errorf("%v", errors)
 	}
 	return nil
+}
+
+// ServerIP is a dhcp4d.ServerIPFunc backed by interfaces.json, i.e. the
+// address netconfigd was told to assign to ifname rather than whatever the
+// kernel currently has on the link. The appliance uses this so dhcp4d can
+// start before netconfigd has finished applying the address.
+func ServerIP(dir string, _ *net.Interface, ifname string) (net.IP, error) {
+	return LinkAddress(dir, ifname)
 }

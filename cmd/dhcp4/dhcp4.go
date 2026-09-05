@@ -32,15 +32,15 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/0magnet/router7/internal/dhcp4"
+	"github.com/0magnet/router7/internal/netconfig"
+	"github.com/0magnet/router7/internal/notify"
+	"github.com/0magnet/router7/pkg/teelogger"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/renameio"
 	"github.com/jpillora/backoff"
 	rtr7dhcp4 "github.com/rtr7/dhcp4"
-	"github.com/rtr7/router7/internal/dhcp4"
-	"github.com/rtr7/router7/internal/netconfig"
-	"github.com/rtr7/router7/internal/notify"
-	"github.com/rtr7/router7/internal/teelogger"
 )
 
 var log = teelogger.NewConsole()

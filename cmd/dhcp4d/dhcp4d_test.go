@@ -27,8 +27,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/0magnet/router7/pkg/dhcp4d"
 	"github.com/google/go-cmp/cmp"
-	"github.com/rtr7/router7/internal/dhcp4d"
 	"golang.org/x/sync/errgroup"
 )
 

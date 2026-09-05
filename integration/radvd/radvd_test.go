@@ -22,7 +22,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/rtr7/router7/internal/radvd"
+	"github.com/0magnet/router7/internal/radvd"
 
 	"github.com/google/go-cmp/cmp"
 )

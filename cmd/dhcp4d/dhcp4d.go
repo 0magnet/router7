@@ -44,11 +44,12 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/rtr7/router7/internal/dhcp4d"
-	"github.com/rtr7/router7/internal/multilisten"
-	"github.com/rtr7/router7/internal/notify"
-	"github.com/rtr7/router7/internal/oui"
-	"github.com/rtr7/router7/internal/teelogger"
+	"github.com/0magnet/router7/internal/netconfig"
+	"github.com/0magnet/router7/internal/notify"
+	"github.com/0magnet/router7/pkg/dhcp4d"
+	"github.com/0magnet/router7/pkg/multilisten"
+	"github.com/0magnet/router7/pkg/oui"
+	"github.com/0magnet/router7/pkg/teelogger"
 )
 
 var iface = flag.String("interface", "lan0", "ethernet interface to listen for DHCPv4 requests on")
@@ -267,7 +268,7 @@ func newSrv(permDir string) (*srv, error) {
 	if err != nil {
 		return nil, err
 	}
-	handler, err := dhcp4d.NewHandler(permDir, ifc, *iface, nil)
+	handler, err := dhcp4d.NewHandler(permDir, ifc, *iface, nil, netconfig.ServerIP)
 	if err != nil {
 		return nil, err
 	}

@@ -26,11 +26,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/0magnet/router7/internal/notify"
+	"github.com/0magnet/router7/pkg/dhcp6"
+	"github.com/0magnet/router7/pkg/teelogger"
 	"github.com/google/renameio"
 	"github.com/jpillora/backoff"
-	"github.com/rtr7/router7/internal/dhcp6"
-	"github.com/rtr7/router7/internal/notify"
-	"github.com/rtr7/router7/internal/teelogger"
 )
 
 var log = teelogger.NewConsole()

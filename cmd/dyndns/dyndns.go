@@ -28,9 +28,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/0magnet/router7/internal/dyndns"
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/libdns"
-	"github.com/rtr7/router7/internal/dyndns"
 )
 
 var update = dyndns.Update

@@ -1,3 +1,5 @@
+//go:build linux
+
 // Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +27,8 @@ import (
 	"time"
 
 	"github.com/krolaw/dhcp4"
+
+	"github.com/0magnet/router7/internal/netconfig"
 )
 
 func messageType(p dhcp4.Packet) dhcp4.MessageType {
@@ -96,6 +100,7 @@ func testHandler(t *testing.T) (_ *Handler, cleanup func()) {
 		},
 		"lan0",
 		&noopSink{},
+		netconfig.ServerIP,
 	)
 	if err != nil {
 		t.Fatal(err)

@@ -27,7 +27,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rtr7/router7/internal/dhcp4d"
+	"github.com/0magnet/router7/pkg/dhcp4d"
 
 	"github.com/miekg/dns"
 )
