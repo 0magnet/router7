@@ -27,9 +27,9 @@ require (
 	github.com/vishvananda/netns v0.0.5
 	golang.org/x/crypto v0.56.0
 	golang.org/x/net v0.58.0
-	golang.org/x/sync v0.22.0
-	golang.org/x/sys v0.47.0
-	golang.org/x/time v0.15.0
+	golang.org/x/sync v0.23.0
+	golang.org/x/sys v0.48.0
+	golang.org/x/time v0.16.0
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20241231184526-a9ab2273dd10
 )
 
@@ -53,7 +53,7 @@ require (
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/u-root/uio v0.0.0-20240224005618-d2acac8f3701 // indirect
-	golang.org/x/text v0.41.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
 	golang.zx2c4.com/wireguard v0.0.0-20260522210424-ecfc5a8d5446 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
 	kernel.org/pub/linux/libs/security/libcap/psx v1.2.78 // indirect
