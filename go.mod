@@ -19,14 +19,14 @@ require (
 	github.com/libdns/libdns v1.1.1
 	github.com/mdlayher/ethtool v0.6.1
 	github.com/mdlayher/ndp v1.1.0
-	github.com/mdlayher/packet v1.1.2
+	github.com/mdlayher/packet v1.2.0
 	github.com/miekg/dns v1.1.73
 	github.com/prometheus/client_golang v1.24.1
 	github.com/rtr7/dhcp4 v0.0.0-20220302171438-18c84d089b46
 	github.com/vishvananda/netlink v1.3.1
 	github.com/vishvananda/netns v0.0.5
-	golang.org/x/crypto v0.56.0
-	golang.org/x/net v0.58.0
+	golang.org/x/crypto v0.57.0
+	golang.org/x/net v0.59.0
 	golang.org/x/sync v0.23.0
 	golang.org/x/sys v0.48.0
 	golang.org/x/time v0.16.0
@@ -39,8 +39,7 @@ require (
 	github.com/digineo/go-logwrap v0.0.0-20181106161722-a178c58ea3f0 // indirect
 	github.com/google/renameio/v2 v2.0.2 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
-	github.com/josharian/native v1.1.0 // indirect
-	github.com/landlock-lsm/go-landlock v0.10.0 // indirect
+	github.com/landlock-lsm/go-landlock v0.10.1 // indirect
 	github.com/mdlayher/genetlink v1.4.0 // indirect
 	github.com/mdlayher/netlink v1.11.2 // indirect
 	github.com/mdlayher/socket v0.7.0 // indirect
