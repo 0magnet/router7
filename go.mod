@@ -6,7 +6,7 @@ require (
 	github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883
 	github.com/digineo/go-ping v1.2.0
 	github.com/eclipse/paho.mqtt.golang v1.5.1
-	github.com/gokrazy/gokrazy v0.0.0-20260905142623-c243e28f616d
+	github.com/gokrazy/gokrazy v0.0.0-20260916140236-39fe3e5557b8
 	github.com/gokrazy/rsync v0.3.7
 	github.com/google/go-cmp v0.7.0
 	github.com/google/gopacket v1.1.19
@@ -45,7 +45,7 @@ require (
 	github.com/mdlayher/socket v0.7.0 // indirect
 	github.com/mmcloughlin/md4 v0.1.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/pierrec/lz4/v4 v4.1.29 // indirect
+	github.com/pierrec/lz4/v4 v4.1.30 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
 	github.com/prometheus/common v0.71.0 // indirect
 	github.com/prometheus/procfs v0.22.0 // indirect
